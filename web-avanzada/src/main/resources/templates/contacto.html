@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacto</title>
+</head>
+<body>
+    <h1 th:text="${mensaje}"></h1>
+    <hr>
+    <h2>Datos del Producto (Objeto)</h2>
+    <p>ID: <span th:text="${objeto.numero}"></span></p>
+    <p>Concepto: <span th:text="${objeto.concepto}"></span></p>
+    <p>Importe: <span th:text="${objeto.importe}"></span></p>
+</body>
+</html>
