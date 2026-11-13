@@ -1,166 +1,198 @@
-# Spring Boot Thymeleaf Fullstack Demos
+# Spring Boot + Thymeleaf — demos full-stack
 
-[Español](#español) | [English](#english)
+[![Java](https://img.shields.io/badge/Java-21%2B-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Thymeleaf](https://img.shields.io/badge/Thymeleaf-SSR-005F0F)](https://www.thymeleaf.org/)
+[![MIT](https://img.shields.io/badge/Licencia-MIT-green)](LICENSE)
+
+[Español](#español) · [English](#english)
 
 ---
 
-<a id="español"></a>
-# 🇪🇸 Guía del Proyecto (Español)
+## Español
 
-Este repositorio contiene dos proyectos demostrativos construidos con **Spring Boot 3** y **Thymeleaf**, diseñados para ilustrar desde conceptos básicos de renderizado web hasta integraciones más avanzadas con modelos de datos y colecciones.
+### Índice
 
-## 📑 Índice
-1. [Descripción General](#descripción-general)
-2. [Estructura del Repositorio](#estructura-del-repositorio)
-3. [Requisitos Previos](#requisitos-previos)
-4. [Instalación y Ejecución](#instalación-y-ejecución)
-5. [Detalle de los Proyectos](#detalle-de-los-proyectos)
-    - [Web Dinámica (Básico)](#1-web-dinámica-básico)
-    - [Web Avanzada (Intermedio)](#2-web-avanzada-intermedio)
+- [Descripción](#descripción)
+- [Los dos proyectos](#los-dos-proyectos)
+- [Estructura del repositorio](#estructura-del-repositorio)
+- [Requisitos](#requisitos)
+- [Ejecución](#ejecución)
+- [Rutas de prueba](#rutas-de-prueba)
+- [Licencia](#licencia)
 
-## Descripción General
-El objetivo de estos proyectos es proporcionar una base sólida para el desarrollo full-stack utilizando el ecosistema de Spring y motores de plantillas del lado del servidor.
+### Descripción
 
-## Estructura del Repositorio
+Repositorio con **dos proyectos didácticos** de **Spring Boot 3** y **Thymeleaf** que van de lo más básico a algo más elaborado: pasar cadenas a una plantilla y, después, objetos completos y listas con `th:each`. Sirven como punto de partida para renderizado del lado del servidor (SSR).
+
+### Los dos proyectos
+
+**1. Web dinámica (básico)** — `webdinamica/webdinamica`
+
+- Demuestra cómo un `@Controller` pasa datos simples a una vista HTML.
+- Usa `@GetMapping`, la interfaz `Model` y `th:text`.
+- Una sola ruta de prueba: `/pruebas`.
+
+**2. Web avanzada (intermedio)** — `web-avanzada`
+
+- Introduce el modelo `Producto` y listas de objetos.
+- Renderiza objetos con `th:text="${objeto.propiedad}"` e itera con `th:each`.
+- Combina un controlador MVC (`UserController`) con un controlador REST (`ProductController` bajo `/api`).
+
+### Estructura del repositorio
+
 ```text
 spring-boot-thymeleaf-fullstack-demos/
-├── webdinamica/          # Proyecto básico de introducción a Thymeleaf
-│   └── webdinamica/      # Código fuente del proyecto básico
-└── web-avanzada/         # Proyecto intermedio con modelos y colecciones
+├── webdinamica/
+│   └── webdinamica/          # Proyecto básico
+│       ├── src/main/java/com/example/webdinamica/
+│       └── src/main/resources/templates/
+├── web-avanzada/             # Proyecto intermedio
+│   ├── src/main/java/com/example/web/avanzada/
+│   │   ├── controller/ProductController.java  # /api (JSON)
+│   │   ├── controller/UserController.java     # vistas HTML
+│   │   └── model/Producto.java
+│   └── src/main/resources/templates/
+│       ├── pruebas.html
+│       ├── contacto.html
+│       └── productos/ver_productos.html
+├── LICENSE
+└── README.md
 ```
 
-## Requisitos Previos
-Para ejecutar estos proyectos, necesitas tener instalado:
-*   **Java 21** o superior.
-*   **Maven** (opcional, ya que se incluye el Maven Wrapper `mvnw`).
-*   Un IDE compatible con Java (IntelliJ IDEA, Eclipse, VS Code, etc.).
+### Requisitos
 
-## Instalación y Ejecución
+- **Java 21** o superior.
+- **Maven** (opcional: ambos proyectos incluyen `mvnw`).
+- Un IDE compatible con Java (IntelliJ IDEA, Eclipse, VS Code).
 
-Ambos proyectos se ejecutan de manera independiente. Sigue estos pasos para arrancar cualquiera de ellos:
+### Ejecución
 
-1.  **Clona el repositorio:**
-    ```bash
-    git clone <url-del-repositorio>
-    cd spring-boot-thymeleaf-fullstack-demos
-    ```
+Los proyectos se ejecutan por separado y comparten el puerto 8080, así que arranca uno cada vez.
 
-2.  **Ejecuta "Web Dinámica" (Básico):**
-    ```bash
-    cd webdinamica/webdinamica
-    ./mvnw spring-boot:run
-    ```
-    *La aplicación estará disponible en `http://localhost:8080` (endpoint de prueba: `/pruebas`).*
+**Web dinámica**
 
-3.  **Ejecuta "Web Avanzada" (Intermedio):**
-    ```bash
-    cd web-avanzada
-    ./mvnw spring-boot:run
-    ```
-    *La aplicación estará disponible en `http://localhost:8080` (endpoints de prueba: `/producto/ver`, `/producto/lista`).*
+```bash
+cd webdinamica/webdinamica
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
+```
 
----
+**Web avanzada**
 
-## Detalle de los Proyectos
+```bash
+cd web-avanzada
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
+```
 
-### 1. Web Dinámica (Básico)
-Ubicación: `webdinamica/webdinamica`
+### Rutas de prueba
 
-Este proyecto es una introducción guiada a Spring Boot MVC y Thymeleaf.
-*   **Objetivo**: Demostrar cómo pasar datos simples (Strings) desde un Controlador de Spring a una vista HTML.
-*   **Características clave**:
-    *   Uso de `@Controller` y `@GetMapping`.
-    *   Inyección de datos mediante la interfaz `Model`.
-    *   Renderizado en Thymeleaf con atributos como `th:text`.
+| Proyecto | Ruta | Qué muestra |
+|---|---|---|
+| Web dinámica | `/pruebas` | Cadena pasada desde el controlador |
+| Web avanzada | `/pruebas` | Texto y datos simples en plantilla |
+| Web avanzada | `/contacto` | Un objeto `Producto` en la vista |
+| Web avanzada | `/productos` | Lista de productos con `th:each` |
+| Web avanzada | `/api/users` | JSON de ejemplo |
+| Web avanzada | `/api/create` | `POST` que devuelve el cuerpo modificado |
 
-### 2. Web Avanzada (Intermedio)
-Ubicación: `web-avanzada`
+> [!NOTE]
+> El README original mencionaba `/producto/ver` y `/producto/lista`; las rutas reales del código son `/productos`, `/contacto` y `/pruebas`.
 
-Este proyecto sube el nivel introduciendo conceptos de Programación Orientada a Objetos (POO) en las vistas.
-*   **Objetivo**: Mostrar cómo manejar objetos Java complejos y listas de objetos dentro del motor de plantillas.
-*   **Características clave**:
-    *   Creación de clases de Modelo (ej. `Producto`).
-    *   Paso de objetos completos a la vista (`th:text="${objeto.propiedad}"`).
-    *   Iteración de listas y colecciones usando `th:each` para generar listados HTML dinámicos (`<ul>`, `<li>`, `<table>`).
+### Licencia
+
+**MIT** — consulta [LICENSE](LICENSE).
 
 ---
----
 
-<a id="english"></a>
-# 🇬🇧 Project Guide (English)
+## English
 
-This repository contains two demonstration projects built with **Spring Boot 3** and **Thymeleaf**, designed to illustrate everything from basic web rendering concepts to more advanced integrations with data models and collections.
+### Table of contents
 
-## 📑 Table of Contents
-1. [General Description](#general-description)
-2. [Repository Structure](#repository-structure)
-3. [Prerequisites](#prerequisites)
-4. [Installation and Execution](#installation-and-execution)
-5. [Project Details](#project-details)
-    - [Dynamic Web (Basic)](#1-dynamic-web-basic)
-    - [Advanced Web (Intermediate)](#2-advanced-web-intermediate)
+- [Overview](#overview)
+- [The two projects](#the-two-projects)
+- [Repository structure](#repository-structure)
+- [Requirements](#requirements)
+- [Running](#running)
+- [Test routes](#test-routes)
+- [License](#license)
 
-## General Description
-The goal of these projects is to provide a solid foundation for full-stack development using the Spring ecosystem and server-side template engines.
+### Overview
 
-## Repository Structure
+A repository with **two teaching projects** built on **Spring Boot 3** and **Thymeleaf**, moving from the basics to something more elaborate: passing strings to a template, then whole objects and lists with `th:each`. They work as a starting point for server-side rendering (SSR).
+
+### The two projects
+
+**1. Dynamic web (basic)** — `webdinamica/webdinamica`
+
+- Shows how a `@Controller` passes simple data to an HTML view.
+- Uses `@GetMapping`, the `Model` interface and `th:text`.
+- A single test route: `/pruebas`.
+
+**2. Advanced web (intermediate)** — `web-avanzada`
+
+- Introduces the `Producto` model and lists of objects.
+- Renders objects with `th:text="${object.property}"` and iterates with `th:each`.
+- Combines an MVC controller (`UserController`) with a REST controller (`ProductController` under `/api`).
+
+### Repository structure
+
 ```text
 spring-boot-thymeleaf-fullstack-demos/
-├── webdinamica/          # Basic introductory project to Thymeleaf
-│   └── webdinamica/      # Source code for the basic project
-└── web-avanzada/         # Intermediate project with models and collections
+├── webdinamica/
+│   └── webdinamica/          # Basic project
+│       ├── src/main/java/com/example/webdinamica/
+│       └── src/main/resources/templates/
+├── web-avanzada/             # Intermediate project
+│   ├── src/main/java/com/example/web/avanzada/
+│   │   ├── controller/ProductController.java  # /api (JSON)
+│   │   ├── controller/UserController.java     # HTML views
+│   │   └── model/Producto.java
+│   └── src/main/resources/templates/
+│       ├── pruebas.html
+│       ├── contacto.html
+│       └── productos/ver_productos.html
+├── LICENSE
+└── README.md
 ```
 
-## Prerequisites
-To run these projects, you need to have installed:
-*   **Java 21** or higher.
-*   **Maven** (optional, as the Maven Wrapper `mvnw` is included).
-*   A Java-compatible IDE (IntelliJ IDEA, Eclipse, VS Code, etc.).
+### Requirements
 
-## Installation and Execution
+- **Java 21** or later.
+- **Maven** (optional: both projects include `mvnw`).
+- A Java-compatible IDE (IntelliJ IDEA, Eclipse, VS Code).
 
-Both projects run independently. Follow these steps to start either of them:
+### Running
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd spring-boot-thymeleaf-fullstack-demos
-    ```
+The projects run independently and share port 8080, so start one at a time.
 
-2.  **Run "Dynamic Web" (Basic):**
-    ```bash
-    cd webdinamica/webdinamica
-    ./mvnw spring-boot:run
-    ```
-    *The application will be available at `http://localhost:8080` (test endpoint: `/pruebas`).*
+**Dynamic web**
 
-3.  **Run "Advanced Web" (Intermediate):**
-    ```bash
-    cd web-avanzada
-    ./mvnw spring-boot:run
-    ```
-    *The application will be available at `http://localhost:8080` (test endpoints: `/producto/ver`, `/producto/lista`).*
+```bash
+cd webdinamica/webdinamica
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
+```
 
----
+**Advanced web**
 
-## Project Details
+```bash
+cd web-avanzada
+./mvnw spring-boot:run        # Windows: mvnw.cmd spring-boot:run
+```
 
-### 1. Dynamic Web (Basic)
-Location: `webdinamica/webdinamica`
+### Test routes
 
-This project is a guided introduction to Spring Boot MVC and Thymeleaf.
-*   **Goal**: Demonstrate how to pass simple data (Strings) from a Spring Controller to an HTML view.
-*   **Key Features**:
-    *   Use of `@Controller` and `@GetMapping`.
-    *   Data injection using the `Model` interface.
-    *   Rendering in Thymeleaf with attributes like `th:text`.
+| Project | Route | What it shows |
+|---|---|---|
+| Dynamic web | `/pruebas` | A string passed from the controller |
+| Advanced web | `/pruebas` | Simple text and data in a template |
+| Advanced web | `/contacto` | A `Producto` object in the view |
+| Advanced web | `/productos` | A product list rendered with `th:each` |
+| Advanced web | `/api/users` | Sample JSON |
+| Advanced web | `/api/create` | A `POST` that echoes the body back modified |
 
-### 2. Advanced Web (Intermediate)
-Location: `web-avanzada`
+> [!NOTE]
+> The original README mentioned `/producto/ver` and `/producto/lista`; the routes actually implemented are `/productos`, `/contacto` and `/pruebas`.
 
-This project raises the bar by introducing Object-Oriented Programming (OOP) concepts into the views.
-*   **Goal**: Show how to handle complex Java objects and lists of objects within the template engine.
-*   **Key Features**:
-    *   Creation of Model classes (e.g., `Product`).
-    *   Passing entire objects to the view (`th:text="${object.property}"`).
-    *   Iterating over lists and collections using `th:each` to generate dynamic HTML lists (`<ul>`, `<li>`, `<table>`).
+### License
+
+**MIT** — see [LICENSE](LICENSE).
